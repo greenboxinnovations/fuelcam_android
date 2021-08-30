@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewTransaction">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.GridViewApplication.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/Theme.GridViewApplication.PopupOverlay" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="16dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:text="VENKATESHSUBRAMNIAM"-->
+<!--                android:textSize="30sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_brand"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tv_balance_heading"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:text="VOLKSWAGEN"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_alignParentLeft="true" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_sub_brand"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignBaseline="@+id/tv_brand"-->
+<!--                android:layout_alignBottom="@+id/tv_brand"-->
+<!--                android:layout_marginLeft="16dp"-->
+<!--                android:layout_toEndOf="@+id/tv_brand"-->
+<!--                android:text="VENTO-AWD"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_toRightOf="@+id/tv_brand" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_fuel_type"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignBaseline="@+id/tv_no_plate"-->
+<!--                android:layout_alignBottom="@+id/tv_no_plate"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginEnd="19dp"-->
+<!--                android:text="PETROL"-->
+<!--                android:textAlignment="viewEnd"-->
+<!--                android:textColor="@android:color/holo_red_dark"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:gravity="end"-->
+<!--                android:layout_marginRight="19dp"-->
+<!--                android:layout_alignParentRight="true" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_payment_type"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="26dp"-->
+<!--                android:text="POSTPAID"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:visibility="gone" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_balance_heading"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tv_name"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginTop="6dp"-->
+<!--                android:text="AVAILABLE AMOUNT"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_alignParentLeft="true" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_balance_amount"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignBaseline="@+id/tv_balance_heading"-->
+<!--                android:layout_alignBottom="@+id/tv_balance_heading"-->
+<!--                android:layout_marginStart="13dp"-->
+<!--                android:layout_toEndOf="@+id/tv_balance_heading"-->
+<!--                android:text="15000"-->
+<!--                android:textAlignment="textEnd"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_toRightOf="@+id/tv_balance_heading"-->
+<!--                android:layout_marginLeft="13dp"-->
+<!--                android:gravity="end" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_no_plate"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tv_brand"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:text="MH-12-MB-4024"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_alignParentLeft="true" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_sale_amount"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/tv_no_plate"-->
+<!--                android:layout_alignParentStart="true"-->
+<!--                android:layout_marginTop="54dp"-->
+<!--                android:layout_toStartOf="@+id/tv_balance_amount"-->
+<!--                android:ems="10"-->
+<!--                android:hint="Amount"-->
+<!--                android:inputType="numberDecimal"-->
+<!--                android:longClickable="false"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:layout_toLeftOf="@+id/tv_balance_amount" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/b_confirm_sale"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/et_sale_liters"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="54dp"-->
+<!--                android:text="SAVE"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_sale_liters"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignTop="@+id/et_sale_amount"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_toEndOf="@+id/b_confirm_sale"-->
+<!--                android:ems="10"-->
+<!--                android:hint="Liters"-->
+<!--                android:inputType="numberDecimal"-->
+<!--                android:longClickable="false"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_toRightOf="@+id/b_confirm_sale" />-->
+
+
+<!--        </RelativeLayout>-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
+        <EditText
+            android:id="@+id/et_rs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="48dp"
+            android:ems="10"
+            android:hint="Rupees"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rl_back" />
+
+        <EditText
+            android:id="@+id/et_lit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="48dp"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Litres"
+            android:inputType="textPersonName|numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_rs" />
+
+        <TextView
+            android:id="@+id/tv_fuel_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+
+            android:text="Petrol"
+            android:textColor="#263238"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_car_no_plate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_car_no_plate" />
+
+        <TextView
+            android:id="@+id/tv_fuel_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+
+            android:text="67.89"
+            android:textColor="#263238"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_fuel_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_fuel_type" />
+
+
+
+        <TextView
+            android:id="@+id/tv_cust_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+
+            android:text="Customer Name"
+            android:textColor="#263238"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="48dp" />
+
+        <TextView
+            android:id="@+id/tv_car_no_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+
+            android:text="MH12-AA-1374"
+            android:textColor="#263238"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_cust_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_cust_name" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fuel_type">
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_low_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="Low Alert :"
+            android:visibility="invisible"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_fuel_type"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fuel_type" />
+
+        <ProgressBar
+            android:id="@+id/progressBarNewTransaction"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_lit" />
+
+
+        <Button
+            android:id="@+id/b_end_print0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Print 0"
+            app:layout_constraintEnd_toStartOf="@+id/b_end_print1"
+            app:layout_constraintTop_toTopOf="@+id/b_end_print1" />
+
+        <Button
+            android:id="@+id/b_end_print1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Print 1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBarNewTransaction" />
+
+        <Button
+            android:id="@+id/b_end_print2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="print 2"
+            app:layout_constraintStart_toEndOf="@+id/b_end_print1"
+            app:layout_constraintTop_toTopOf="@+id/b_end_print1" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

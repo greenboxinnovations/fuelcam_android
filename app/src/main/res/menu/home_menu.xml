@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/add_car_qr_new"
+        android:title="@string/add_car_qr_code" />
+    <item
+        android:id="@+id/enter_receipt"
+        android:title="@string/receipt_entry" />
+<!--    <item-->
+<!--        android:id="@+id/add_new_rate"-->
+<!--        android:title="@string/new_rate" />-->
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout" />
+</menu>

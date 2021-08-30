@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="url_hosted">https://fuelcam.in</string>
+    <string name="url_local_fuelcam">http://192.168.1.100/fuelcam</string>
+    <string name="url_local_middleware">http://192.168.1.100/middleware</string>
+
+    <string name="app_name">FuelCam</string>
+    <string name="add_new_rate">Add New Rate</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Login</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="previous">Previous</string>
+
+    <string name="login_header">Login to FuelCam</string>
+    <string name="login_btn">Login</string>
+
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="camera_access_required">"Camera access required</string>
+    <string name="ok">OK</string>
+    <string name="title_activity_home">Home</string>
+    <string name="next">Next</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="add_car_qr_code">Assign Car QR</string>
+    <string name="receipt_entry">Receipt Entry</string>
+    <string name="new_rate">Add New Rate</string>
+    <string name="logout">Logout</string>
+    <string name="title_activity_add_qrcode">AddQRCode</string>
+    <string name="title_activity_car_list">CarList</string>
+    <string name="title_activity_add_new_car">AddNewCar</string>
+    <string name="title_activity_add_new_customer">AddNewCustomer</string>
+    <string name="verify_otp">Verify Otp</string>
+</resources>
