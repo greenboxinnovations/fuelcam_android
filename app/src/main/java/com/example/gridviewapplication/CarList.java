@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -164,6 +165,10 @@ public class CarList extends AppCompatActivity implements AdapterCustomerList.gr
                     ).show();
                 }
         );
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
 

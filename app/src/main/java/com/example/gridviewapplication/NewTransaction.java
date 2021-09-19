@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -28,6 +29,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.gridviewapplication.databinding.ActivityNewTransactionBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -286,13 +288,34 @@ public class NewTransaction extends AppCompatActivity {
                 return headers;
             }
         };
+
+
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
 
+    @Override
+    public void onBackPressed() {
+        if (!click) {
+            super.onBackPressed();
+        }
+    }
+
     private void clickStopPhoto() {
 //        String url = "http://192.168.1.100/fuelcam/scan_pump";
         String url = url_local_fuelcam + "/scan_pump";
+
+
+        // xml for slow transactions
+        progressBar.setVisibility(View.VISIBLE);
+        bp0.setEnabled(false);
+        bp1.setEnabled(false);
+        bp2.setEnabled(false);
+        click = true;
 
 
         JSONObject jsonObj = new JSONObject();
@@ -313,6 +336,13 @@ public class NewTransaction extends AppCompatActivity {
                     Log.e("new transaction resp", response.toString());
                     try {
                         if (response.getBoolean("success")) {
+
+                            // xml for slow transactions
+                            progressBar.setVisibility(View.INVISIBLE);
+                            bp0.setEnabled(true);
+                            bp1.setEnabled(true);
+                            bp2.setEnabled(true);
+                            click = false;
 
                             //get photo url as response and display here
                             String photo_url = response.getString("photo_url");
@@ -337,6 +367,8 @@ public class NewTransaction extends AppCompatActivity {
                             LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width, height);
                             image.setLayoutParams(parms);
                             Glide.with(NewTransaction.this)
+                                    .setDefaultRequestOptions(new RequestOptions()
+                                            .timeout(60000))
                                     .load(url_photo)
                                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                                     .skipMemoryCache(true)
@@ -388,6 +420,14 @@ public class NewTransaction extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
+
+            // xml for slow transactions
+            progressBar.setVisibility(View.INVISIBLE);
+            bp0.setEnabled(true);
+            bp1.setEnabled(true);
+            bp2.setEnabled(true);
+            click = false;
+
             NetworkResponse networkResponse = error.networkResponse;
             if (networkResponse != null && networkResponse.statusCode == 409) {
                 // HTTP Status Code: 409 Client error
@@ -414,6 +454,12 @@ public class NewTransaction extends AppCompatActivity {
                 return headers;
             }
         };
+
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
+
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 

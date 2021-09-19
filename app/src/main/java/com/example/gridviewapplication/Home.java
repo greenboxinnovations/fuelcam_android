@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,6 +39,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.example.gridviewapplication.databinding.ActivityHomeBinding;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -176,11 +178,11 @@ public class Home extends AppCompatActivity {
 
             String user_role = (String) PrefUtils.getFromPrefs(this, PrefKeys.USER_ROLE, "");
 
-            if(user_role.equals("admin")||user_role.equals("manager")){
+            if (user_role.equals("admin") || user_role.equals("manager")) {
                 Intent i = new Intent(getApplicationContext(), AddQRCode.class);
                 startActivity(i);
                 Log.e(TAG, "assign qr");
-            }else{
+            } else {
                 Snackbar.make(binding.getRoot(), "Manager access only", Snackbar.LENGTH_SHORT).show();
             }
 
@@ -450,6 +452,8 @@ public class Home extends AppCompatActivity {
                                             new AlertDialog.Builder(Home.this).
                                                     setTitle("Scan Pump Now").
                                                     setMessage(dialog_string).
+                                                    setCancelable(false).
+                                                    setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).
                                                     setPositiveButton("OK", (dialog, which) -> {
                                                         Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                                         if (vibe != null) {
@@ -488,6 +492,7 @@ public class Home extends AppCompatActivity {
                 binding.homeContainer.buttonSearchCarNo.setEnabled(true);
                 binding.fab.setEnabled(true);
 
+
                 NetworkResponse networkResponse = error.networkResponse;
                 if (networkResponse != null && networkResponse.statusCode == 409) {
                     // HTTP Status Code: 409 Client error
@@ -503,6 +508,10 @@ public class Home extends AppCompatActivity {
                     } catch (UnsupportedEncodingException | JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    // possible timeout
+                    AppUtils.hideSoftKeyboard(Home.this);
+                    Snackbar.make(binding.getRoot(), "Network Timeout", Snackbar.LENGTH_SHORT).show();
                 }
             }) {
 
@@ -514,6 +523,10 @@ public class Home extends AppCompatActivity {
                     return headers;
                 }
             };
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                    10000,
+                    0,
+                    2));
             MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
 
         } else {
@@ -579,6 +592,8 @@ public class Home extends AppCompatActivity {
                                 new AlertDialog.Builder(Home.this).
                                         setTitle("Scan Pump Now").
                                         setMessage(dialog_string).
+                                        setCancelable(false).
+                                        setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).
                                         setPositiveButton("OK", (dialog, which) -> {
                                             Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                             if (vibe != null) {
@@ -603,6 +618,7 @@ public class Home extends AppCompatActivity {
                     binding.homeContainer.buttonSearchCarNo.setEnabled(true);
                     binding.fab.setEnabled(true);
 
+
                     NetworkResponse networkResponse = error.networkResponse;
                     if (networkResponse != null && networkResponse.statusCode == 409) {
                         // HTTP Status Code: 409 Client error
@@ -620,8 +636,17 @@ public class Home extends AppCompatActivity {
                         } catch (UnsupportedEncodingException | JSONException e) {
                             e.printStackTrace();
                         }
+                    } else {
+                        // possible timeout
+                        AppUtils.hideSoftKeyboard(Home.this);
+                        Snackbar.make(binding.getRoot(), "Network Timeout", Snackbar.LENGTH_SHORT).show();
                     }
                 });
+
+                jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                        10000,
+                        0,
+                        2));
                 MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
             }
 
@@ -707,6 +732,8 @@ public class Home extends AppCompatActivity {
                                 LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(width, height);
                                 image.setLayoutParams(parms);
                                 Glide.with(Home.this)
+                                        .setDefaultRequestOptions(new RequestOptions()
+                                                .timeout(60000))
                                         .load(url_photo)
                                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                                         .skipMemoryCache(true)
@@ -741,6 +768,7 @@ public class Home extends AppCompatActivity {
                                 final AlertDialog.Builder builder =
                                         new AlertDialog.Builder(Home.this).
                                                 setMessage("Zero Photo").
+                                                setCancelable(false).
                                                 setPositiveButton("Start", (dialog, which) -> {
                                                     Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                                                     if (vibe != null) {
@@ -755,7 +783,9 @@ public class Home extends AppCompatActivity {
                                                     curTransPojo = null;
                                                     startActivity(i);
                                                 }).
-                                                setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss()).setCancelable(false).
+                                                setNegativeButton("Cancel", (dialog, which) -> {
+                                                    cancelTransaction(nozzle_qr, no_plate);
+                                                }).
                                                 setView(image);
                                 builder.create().show();
 
@@ -790,7 +820,13 @@ public class Home extends AppCompatActivity {
                     } catch (UnsupportedEncodingException | JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    // possible timeout
+                    AppUtils.hideSoftKeyboard(Home.this);
+                    Snackbar.make(binding.getRoot(), "Network Timeout", Snackbar.LENGTH_SHORT).show();
                 }
+
+
             }) {
 
                 @Override
@@ -801,6 +837,10 @@ public class Home extends AppCompatActivity {
                     return headers;
                 }
             };
+            jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                    10000,
+                    0,
+                    2));
             MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
         } else {
             Snackbar.make(binding.getRoot(), "Please Enable Wifi", Snackbar.LENGTH_LONG).show();
@@ -952,6 +992,57 @@ public class Home extends AppCompatActivity {
         } else {
             Snackbar.make(binding.getRoot(), "Please Enable Wifi", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+
+    private void cancelTransaction(String nozzle_qr, String no_plate) {
+
+        String url = url_local_fuelcam + "/scan_pump";
+
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("photo_type", "cancel");
+            jsonObj.put("nozzle_qr", nozzle_qr);
+            jsonObj.put("no_plate", no_plate);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                url, jsonObj,
+                response -> {
+                    Log.e("login response", response.toString());
+
+                }, error -> {
+
+            NetworkResponse networkResponse = error.networkResponse;
+            if (networkResponse != null && networkResponse.statusCode == 409) {
+                // HTTP Status Code: 409 Client error
+                try {
+                    // 409 is not possible from android, but still included to catch random error
+                    String jsonString = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+                    JSONObject obj = new JSONObject(jsonString);
+                    String message = obj.getString("message");
+
+
+                    // Log.e("NetworkResponse", message);
+                    Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT).show();
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("charset", "utf-8");
+                return headers;
+            }
+        };
+        MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
 

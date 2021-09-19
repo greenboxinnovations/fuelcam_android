@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.gridviewapplication.databinding.ActivityAddNewCustomerBinding;
@@ -161,6 +162,10 @@ public class AddNewCustomer extends AppCompatActivity {
                 return headers;
             }
         };
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
@@ -221,6 +226,10 @@ public class AddNewCustomer extends AppCompatActivity {
                 return headers;
             }
         };
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
@@ -297,6 +306,10 @@ public class AddNewCustomer extends AppCompatActivity {
                 return headers;
             }
         };
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 }

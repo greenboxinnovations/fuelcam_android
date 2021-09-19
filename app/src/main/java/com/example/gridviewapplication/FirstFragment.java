@@ -15,9 +15,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -108,6 +111,7 @@ public class FirstFragment extends Fragment {
         try {
             jsonObj.put("name", name);
             jsonObj.put("pass", pass);
+            jsonObj.put("version", "1.5");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -181,6 +185,10 @@ public class FirstFragment extends Fragment {
             progressBar.setVisibility(View.INVISIBLE);
             binding.buttonLogin.setEnabled(true);
 
+            // possible timeout
+            AppUtils.hideSoftKeyboard(requireActivity());
+            Snackbar.make(binding.getRoot(), "Network Timeout", Snackbar.LENGTH_SHORT).show();
+
             NetworkResponse networkResponse = error.networkResponse;
             if (networkResponse != null && networkResponse.statusCode == 409) {
                 // HTTP Status Code: 409 Client error
@@ -217,6 +225,12 @@ public class FirstFragment extends Fragment {
             }
         };
         // MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
+
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                2));
+
         MySingleton.getInstance(requireActivity().getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 

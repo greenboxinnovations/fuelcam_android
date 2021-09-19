@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -156,6 +157,10 @@ public class AddQRCode extends AppCompatActivity implements AdapterCustomerList.
                     ).show();
                 }
         );
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                0,
+                2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }
 
