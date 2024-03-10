@@ -489,9 +489,12 @@ public class Home extends AppCompatActivity {
                             } else if (!response.getBoolean("success")) {
 
                                 // xml for slow network
-                                progressBar.setVisibility(View.VISIBLE);
-                                binding.homeContainer.buttonSearchCarNo.setEnabled(false);
-                                binding.fab.setEnabled(false);
+//                                progressBar.setVisibility(View.VISIBLE);
+//                                binding.homeContainer.buttonSearchCarNo.setEnabled(false);
+//                                binding.fab.setEnabled(false);
+                                progressBar.setVisibility(View.INVISIBLE);
+                                binding.homeContainer.buttonSearchCarNo.setEnabled(true);
+                                binding.fab.setEnabled(true);
 
                                 String msg = response.getString("msg");
                                 Snackbar.make(binding.getRoot(), msg, Snackbar.LENGTH_SHORT).show();
