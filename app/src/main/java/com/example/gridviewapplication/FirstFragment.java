@@ -134,32 +134,39 @@ public class FirstFragment extends Fragment {
                         if (response.getBoolean("success")) {
                             Log.e("result", "success");
 
-                            int user_id = response.getInt("user_id");
-                            int pump_id = response.getInt("pump_id");
-                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DATE, response.getString("date"));
-                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ROLE, response.getString("role"));
-                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, user_id);
-                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, pump_id);
-                            chooseShiftDialog();
+                            // dont allow rate set
 
-//                            if (!response.getBoolean("rate_set")) {
-//                                int user_id = response.getInt("user_id");
-//                                int pump_id = response.getInt("pump_id");
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, user_id);
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, pump_id);
-//                                goToSetRates(user_id, pump_id);
-//                            } else if ((response.getString("date").equals(date)) && (response.getBoolean("rate_set"))) {
-//
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_NAME, response.getString("user_name"));
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, response.getInt("user_id"));
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, response.getInt("pump_id"));
-//
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PETROL_RATE, response.getString("petrol_rate"));
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DIESEL_RATE, response.getString("diesel_rate"));
-//                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DATE, response.getString("date"));
-//
-//                                chooseShiftDialog();
-//                            }
+//                            int user_id = response.getInt("user_id");
+//                            int pump_id = response.getInt("pump_id");
+//                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DATE, response.getString("date"));
+//                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ROLE, response.getString("role"));
+//                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, user_id);
+//                            PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, pump_id);
+//                            chooseShiftDialog();
+
+
+                            // allow rate set
+                            if (!response.getBoolean("rate_set")) {
+                                int user_id = response.getInt("user_id");
+                                int pump_id = response.getInt("pump_id");
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, user_id);
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, pump_id);
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ROLE, response.getString("role"));
+                                goToSetRates(user_id, pump_id);
+                            } else if ((response.getString("date").equals(date)) && (response.getBoolean("rate_set"))) {
+
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_NAME, response.getString("user_name"));
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, response.getInt("user_id"));
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PUMP_ID, response.getInt("pump_id"));
+
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.PETROL_RATE, response.getString("petrol_rate"));
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DIESEL_RATE, response.getString("diesel_rate"));
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.DATE, response.getString("date"));
+
+                                PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ROLE, response.getString("role"));
+
+                                chooseShiftDialog();
+                            }
 
                         } else if (!response.getBoolean("success")) {
                             // Password Username error

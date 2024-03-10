@@ -135,18 +135,27 @@ public class Home extends AppCompatActivity {
 
         // search for car number
         binding.homeContainer.buttonSearchCarNo.setOnClickListener(v -> {
-            String no_plate = binding.homeContainer.etNoPlate.getText().toString().toLowerCase().trim();
 
-            if (myGlobals.getTransListSize() >= 2) {
-                AppUtils.hideSoftKeyboard(this);
-                Snackbar.make(binding.getRoot(), "Only 2 transactions allowed", Snackbar.LENGTH_LONG).show();
+            if (isWiFiEnabled) {
+                String no_plate = binding.homeContainer.etNoPlate.getText().toString().toLowerCase().trim();
+
+
+                if (!no_plate.equals("")) {
+                    if (myGlobals.getTransListSize() >= 2) {
+                        AppUtils.hideSoftKeyboard(this);
+                        Snackbar.make(binding.getRoot(), "Only 2 transactions allowed", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        // xml for slow network
+                        progressBar.setVisibility(View.VISIBLE);
+                        binding.homeContainer.buttonSearchCarNo.setEnabled(false);
+                        binding.fab.setEnabled(false);
+                        searchNoPlate(no_plate);
+                    }
+                }
             } else {
-                // xml for slow network
-                progressBar.setVisibility(View.VISIBLE);
-                binding.homeContainer.buttonSearchCarNo.setEnabled(false);
-                binding.fab.setEnabled(false);
-                searchNoPlate(no_plate);
+                Snackbar.make(binding.getRoot(), "Wifi Not connected to fuelcam", Snackbar.LENGTH_LONG).show();
             }
+
         });
 
         // allow to reenter new-transaction
@@ -216,20 +225,25 @@ public class Home extends AppCompatActivity {
             Log.e("myGlobals", "transList: " + transaction.getCar_plate_no());
         }
 
+        isWiFiEnabled = myGlobals.isWiFiEnabled();
 
         getLatestRate();
 
         setUI();
 
         // Wifi
-        isWiFiEnabled = myGlobals.isWiFiEnabled();
+
+
+        // mobile network
         if (myGlobals.networkInfo()) {
             Log.e(TAG, "isActiveNetworkMetered");
             myGlobals.promptWiFiConnection(Home.this);
         } else {
+
+            // wifi network
             Log.e(TAG, "not Metered");
             Log.e(TAG, "useOnlyWifi");
-            myGlobals.useOnlyWifi();
+            //myGlobals.useOnlyWifi();
         }
 
         // date mismatch, logout user
@@ -238,25 +252,28 @@ public class Home extends AppCompatActivity {
     }
 
     private void getLatestRate() {
-        String url = url_local_fuelcam + "/latest_rate";
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null, response -> {
-            try {
-                if (response.getBoolean("success")) {
-                    PrefUtils.saveToPrefs(Home.this, PrefKeys.PETROL_RATE, response.getString("petrol_rate"));
-                    PrefUtils.saveToPrefs(Home.this, PrefKeys.DIESEL_RATE, response.getString("diesel_rate"));
-                    setUI();
+        if (isWiFiEnabled) {
+            String url = url_local_fuelcam + "/latest_rate";
+
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                    url, null, response -> {
+                try {
+                    if (response.getBoolean("success")) {
+                        PrefUtils.saveToPrefs(Home.this, PrefKeys.PETROL_RATE, response.getString("petrol_rate"));
+                        PrefUtils.saveToPrefs(Home.this, PrefKeys.DIESEL_RATE, response.getString("diesel_rate"));
+                        setUI();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
-        }, error -> {
-            Log.e(TAG, error.getMessage());
+            }, error -> {
+                Log.e(TAG, error.getMessage());
 
-        });
-        MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
+            });
+            MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjReq);
+        }
     }
 
     private void logoutYesterdaySignIn() {
@@ -377,14 +394,11 @@ public class Home extends AppCompatActivity {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Enter receipt no")
                 .setView(input)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("Ok", (dialog1, which) -> {
 
-                        String rNum = input.getText().toString();
-                        if (!rNum.equals("")) {
-                            isReceiptInLocalDB(rNum);
-                        }
+                    String rNum = input.getText().toString();
+                    if (!rNum.equals("")) {
+                        isReceiptInLocalDB(rNum);
                     }
                 })
                 .setNegativeButton("Cancel", null)

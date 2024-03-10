@@ -3,6 +3,7 @@
     <string name="url_hosted">https://fuelcam.in</string>
     <string name="url_local_fuelcam">http://192.168.1.100/fuelcam</string>
     <string name="url_local_middleware">http://192.168.1.100/middleware</string>
+    <string name="url_local_middleware_login_display">192.168.1.100</string>
 
 <!--    debug-->
 <!--    <string name="url_local_fuelcam">http://192.168.0.100/fuelcam</string>-->
@@ -36,4 +37,6 @@
     <string name="title_activity_add_new_car">AddNewCar</string>
     <string name="title_activity_add_new_customer">AddNewCustomer</string>
     <string name="verify_otp">Verify Otp</string>
+    <string name="version">JPBK IOCL V1.5</string>
+<!--    <string name="version">MHKS V1.5</string>-->
 </resources>

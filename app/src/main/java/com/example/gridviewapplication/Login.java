@@ -72,26 +72,47 @@ public class Login extends AppCompatActivity {
         if (AppUtils.hasPermissions(this)) {
             Log.e(TAG, "hasPermissions");
 
-            if (myGlobals.networkInfo()) {
-                Log.e(TAG, "isActiveNetworkMetered");
-                myGlobals.promptWiFiConnection(Login.this);
-                //promptWiFiConnection();
+
+            String pref_date = (String) PrefUtils.getFromPrefs(this, PrefKeys.DATE, "");
+            String shift = (String) PrefUtils.getFromPrefs(this, PrefKeys.USER_SHIFT, "");
+            // date is today and shift is found
+            String date = myGlobals.getDateString();
+
+            if ((date.equals(pref_date)) && (!shift.equals(""))) {
+
+                Intent i = new Intent(Login.this, Home.class);
+                startActivity(i);
+                finish();
             } else {
-                Log.e(TAG, "not Metered");
-                Log.e(TAG, "useOnlyWifi");
-                myGlobals.useOnlyWifi();
-
-                // date is today and shift is found
-                String date = myGlobals.getDateString();
-                String pref_date = (String) PrefUtils.getFromPrefs(this, PrefKeys.DATE, "");
-                String shift = (String) PrefUtils.getFromPrefs(this, PrefKeys.USER_SHIFT, "");
-                if ((date.equals(pref_date)) && (!shift.equals(""))) {
-
-                    Intent i = new Intent(Login.this, Home.class);
-                    startActivity(i);
-                    finish();
+                Log.e(TAG, "isActiveNetworkMetered");
+                if (myGlobals.networkInfo()) {
+                    myGlobals.promptWiFiConnection(Login.this);
                 }
             }
+
+
+//            if (myGlobals.networkInfo()) {
+//                // mobile network
+//                Log.e(TAG, "isActiveNetworkMetered");
+//                myGlobals.promptWiFiConnection(Login.this);
+//                //promptWiFiConnection();
+//            } else {
+//                // wifi
+//                Log.e(TAG, "not Metered");
+//                Log.e(TAG, "useOnlyWifi");
+//                //myGlobals.useOnlyWifi();
+//
+//                // date is today and shift is found
+//                String date = myGlobals.getDateString();
+//                String pref_date = (String) PrefUtils.getFromPrefs(this, PrefKeys.DATE, "");
+//                String shift = (String) PrefUtils.getFromPrefs(this, PrefKeys.USER_SHIFT, "");
+//                if ((date.equals(pref_date)) && (!shift.equals(""))) {
+//
+//                    Intent i = new Intent(Login.this, Home.class);
+//                    startActivity(i);
+//                    finish();
+//                }
+//            }
 
         } else {
             Log.e(TAG, "myRequestPermission");
@@ -211,9 +232,6 @@ public class Login extends AppCompatActivity {
             }
         }
     }
-
-
-
 
 
 //    private void promptWiFiConnection() {

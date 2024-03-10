@@ -96,6 +96,7 @@ public class AddQRCode extends AppCompatActivity implements AdapterCustomerList.
 
 
         String url = getResources().getString(R.string.url_hosted) + "/api/customers/" + pump_id;
+        Log.d(TAG, url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
@@ -159,7 +160,7 @@ public class AddQRCode extends AppCompatActivity implements AdapterCustomerList.
         );
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                 20000,
-                0,
+                5,
                 2));
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
     }

@@ -178,14 +178,11 @@ public class MyGlobals {
 
         alertDialogBuilder.setTitle("WiFi needed");
         alertDialogBuilder.setMessage("Please connect to pump WiFi network");
-        alertDialogBuilder.setPositiveButton("Open Setting", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_WIFI_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.getApplication().startActivity(intent);
-            }
+        alertDialogBuilder.setPositiveButton("Open Setting", (dialogInterface, i) -> {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_WIFI_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.getApplication().startActivity(intent);
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
