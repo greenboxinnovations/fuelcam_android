@@ -82,17 +82,18 @@ public class AddNewCar extends AppCompatActivity {
                     fuel_type = "petrol";
                     isPetrol = true;
 
-                } else if (radioGroup.getCheckedRadioButtonId() == R.id.petrol) {
+                } else if (radioGroup.getCheckedRadioButtonId() == R.id.diesel) {
                     fuel_type = "diesel";
+                    isPetrol = false;
                 }
 
 
-                if (!car_no.equals("")) {
+                if (!car_no.equals("") && !fuel_type.equals("")) {
                     String clean_car_no = car_no.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
                     Log.e("values", "" + clean_car_no + fuel_type);
                     postCustomerCar(clean_car_no, fuel_type);
                 } else {
-                    Snackbar.make(binding.getRoot(), "Please Enter Valid Car Number", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(binding.getRoot(), "Please Enter Valid Car Number and Fuel", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

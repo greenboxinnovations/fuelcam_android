@@ -146,7 +146,8 @@ public class FirstFragment extends Fragment {
 
 
                             // allow rate set
-                            if (!response.getBoolean("rate_set")) {
+                            if (response.getBoolean("rate_set")== false) {
+                                Log.e("result", "rate_Set");
                                 int user_id = response.getInt("user_id");
                                 int pump_id = response.getInt("pump_id");
                                 PrefUtils.saveToPrefs(requireActivity().getApplicationContext(), PrefKeys.USER_ID, user_id);
